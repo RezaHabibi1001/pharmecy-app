@@ -1,0 +1,29 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-image: url("/public/dark2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+html {
+    padding: 0;
+    margin: 0;
+}
+
+  
+  td , th , tr {
+    border-bottom: 2px solid gray;
+    border-collapse: collapse;
+}
+th , td {
+padding: 15px;
+}
+tr:hover {
+    background-color: rgb(230, 225, 225);
+}
+table tbody tr td span:nth-child(1){
+    color: green;
+}
+table tbody tr td span:nth-child(2){
+    color: red;
+}
