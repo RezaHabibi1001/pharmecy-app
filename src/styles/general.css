@@ -1,9 +1,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url("/public/dark2.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-color: rgb(226, 216, 156);
 }
 html {
     padding: 0;

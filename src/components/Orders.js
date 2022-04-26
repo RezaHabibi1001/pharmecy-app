@@ -2,10 +2,12 @@ import React from "react";
 import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { useProduct } from "../zustand";
 
 
 export function Orders() {
 
+  const orders = useProduct(state => state.orders)
   const ProductsStyle = {
     container : {
       width:"750px",
@@ -56,38 +58,21 @@ export function Orders() {
         </tr>
          </thead>
          <tbody>
-         <tr>
-          <td>Reza Habibi</td>
-          <td>345345</td>
-          <td>20</td>
-          <td>55000 Af</td>
-          <td>1400-01-01</td>
-          <td><span> accept </span>  &nbsp;  <span> reject</span></td>
-        </tr>
-        <tr>
-          <td>Kazem Habibi</td>
-          <td>34u4534</td>
-          <td>30</td>
-          <td>44000 Af</td>
-          <td>1401-02-03</td>
-          <td><span> accept </span>  &nbsp;  <span> reject</span></td>
-        </tr>
-        <tr>
-          <td>Reza Habibi</td>
-          <td>345345</td>
-          <td>20</td>
-          <td>55000 Af</td>
-          <td>1400-01-01</td>
-          <td><span> accept </span>  &nbsp;  <span> reject</span></td>
-        </tr>
-        <tr>
-          <td>Kazem Habibi</td>
-          <td>34u4534</td>
-          <td>30</td>
-          <td>44000 Af</td>
-          <td>1401-02-03</td>
-          <td><span> accept </span>  &nbsp;  <span> reject</span></td>
-        </tr>
+
+           {
+             orders.map((order, index) =>{
+              return (
+                <tr key={index}>
+                <td>{order.name}</td>
+                <td>{order.code}</td>
+                <td>{order.item}</td>
+                <td>{order.price}</td>
+                <td>{order.date}</td>
+                <td><span> accept </span>  &nbsp;  <span> reject</span></td>
+              </tr>
+             ) 
+             })
+           }
 
          </tbody>
        </table>

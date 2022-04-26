@@ -1,11 +1,16 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { Login } from './components/Login.js'
 import { Home } from './components/Home.js'
 import {AddProduct} from "./components/AddProduct"
 import { Products } from './components/Products.js'
 import { Orders } from './components/Orders.js'
+import { UpdateProduct } from './components/Update.js'
+import { useProduct } from './zustand/index.js'
+
+
 export const App = () => {
+
   return (
     <BrowserRouter>
       <Routes>
@@ -46,6 +51,14 @@ export const App = () => {
           element={
             <Fragment>
               <Orders />
+            </Fragment>
+          }
+        />
+         <Route
+          path="/Update"
+          element={
+            <Fragment>
+              <UpdateProduct />
             </Fragment>
           }
         />

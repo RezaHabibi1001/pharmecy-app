@@ -13,8 +13,7 @@ export function Home() {
     },
     paragraph : {
         textAlign:"center",
-        color:"white"
-
+        color:"#555"
     }
 } 
     return(

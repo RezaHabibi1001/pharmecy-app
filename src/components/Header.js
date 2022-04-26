@@ -1,4 +1,7 @@
+import { rgbToHex } from "@material-ui/core";
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./../styles/general.css"
 
 export function Header() {
@@ -32,7 +35,7 @@ export function Header() {
 
   aStyle :{
     display:"block",
-    color: "white",
+    color: "#ccc",
     textAlign: "center",
     padding: "30px 16px",
     textDecoration: "none",
@@ -41,10 +44,11 @@ export function Header() {
     },
     logout :{
       float: "right",
+      fontWeight:"bold"
     },
   aLogout  : {
     display:"block",
-    color: "red",
+    color:"#f44",
     textAlign: "center",
     padding: "30px 16px",
     textDecoration: "none",
@@ -54,11 +58,11 @@ export function Header() {
     return(
   <div style={HeaderStyle.container}>
     <ul style={HeaderStyle.ulStyle}>
-    <li style={HeaderStyle.liStyle}><a style = {HeaderStyle.aStyle} onMouseLeave={normalStyle} onMouseEnter={hoverStyle} class= "active" href="Orders"> Home </a></li>
-        <li style={HeaderStyle.liStyle}><a style = {HeaderStyle.aStyle} onMouseLeave={normalStyle} onMouseEnter={hoverStyle} class= "active" href="Orders">Recived Orders</a></li>
-        <li  style={HeaderStyle.liStyle} ><a style = {HeaderStyle.aStyle}onMouseLeave={normalStyle} onMouseEnter={hoverStyle} href="Products">All Products</a></li>
-        <li  style={HeaderStyle.liStyle} ><a style = {HeaderStyle.aStyle}onMouseLeave={normalStyle} onMouseEnter={hoverStyle}  href="AddProduct">Add New Product</a></li>
-        <li  style={HeaderStyle.logout} ><a style = {HeaderStyle.aLogout}onMouseLeave={normalStyle} onMouseEnter={hoverStyle}  href="Login">Logout</a></li>
+    <li style={HeaderStyle.liStyle}><Link style = {HeaderStyle.aStyle} onMouseLeave={normalStyle} onMouseEnter={hoverStyle} class= "active" to="/Home"> Home </Link></li>
+        <li style={HeaderStyle.liStyle}><Link style = {HeaderStyle.aStyle} onMouseLeave={normalStyle} onMouseEnter={hoverStyle} class= "active" to="/Orders">Recived Orders</Link></li>
+        <li  style={HeaderStyle.liStyle} ><Link style = {HeaderStyle.aStyle}onMouseLeave={normalStyle} onMouseEnter={hoverStyle} to="/Products">All Products</Link></li>
+        <li  style={HeaderStyle.liStyle} ><Link style = {HeaderStyle.aStyle}onMouseLeave={normalStyle} onMouseEnter={hoverStyle}  to="/AddProduct">Add New Product</Link></li>
+        <li  style={HeaderStyle.logout} ><Link style = {HeaderStyle.aLogout}onMouseLeave={normalStyle} onMouseEnter={hoverStyle}  to="/">Logout</Link></li>
     </ul>
 
   </div>

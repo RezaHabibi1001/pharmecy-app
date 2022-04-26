@@ -1,10 +1,27 @@
-import React from "react";
+import React, { useState } from "react";
 import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
-
+import { useNavigate } from "react-router-dom";
+import { useProduct } from "../zustand";
 
 export function Products() {
+
+  const navigate = useNavigate()
+  const products = useProduct(state => state.products)
+  const handleproducts = useProduct(state => state.handleProduct)
+  const handleSelectedRow = useProduct(state=>state.handleSelectedRow)  
+  
+  function updateRow(event) {
+    const filteredProducts = products.filter((item) => item.code == event.target.id);
+    const filteredObject = filteredProducts[0]
+    handleSelectedRow(filteredObject)
+    navigate("/Update")
+  }
+  function deleteRow(event) {
+    const filteredProducts = products.filter((item) => item.code !== event.target.id);
+    handleproducts([...filteredProducts])
+  }
 
   const ProductsStyle = {
     container : {
@@ -32,7 +49,14 @@ export function Products() {
     searchLabel : {
       fontSize:"16px",
       color:"green"
-    }
+    }, 
+    update : {
+    cursor:"pointer"
+    },
+    delete : {
+      cursor:"pointer"
+      },
+      
   } 
     return(
   <div>
@@ -56,46 +80,23 @@ export function Products() {
         </tr>
          </thead>
          <tbody>
-         <tr>
-          <td>Tier</td>
-          <td>8475834</td>
-          <td>Cycle</td>
-          <td>400</td>
-          <td>123 Af</td>
-          <td><span>update </span>  &nbsp;  <span> delete</span></td>
-        </tr>
-        <tr>
-          <td>Break</td>
-          <td>34u8758</td>
-          <td>Zaranj</td>
-          <td>34</td>
-          <td>550 Af</td>
-          <td><span>update </span>  &nbsp;  <span> delete</span></td>
-        </tr>
-        <tr>
-          <td>Break</td>
-          <td>34u8758</td>
-          <td>Zaranj</td>
-          <td>34</td>
-          <td>550 Af</td>
-          <td><span>update </span>  &nbsp;  <span> delete</span></td>
-        </tr>
-        <tr>
-          <td>Break</td>
-          <td>34u8758</td>
-          <td>Zaranj</td>
-          <td>34</td>
-          <td>550 Af</td>
-          <td><span> update</span>  &nbsp;  <span> delete</span></td>
-        </tr>
-        <tr>
-          <td>Break</td>
-          <td>34u8758</td>
-          <td>Zaranj</td>
-          <td>34</td>
-          <td>550 Af</td>
-          <td><span> update</span>  &nbsp;  <span> delete</span></td>
-        </tr>
+         
+    {
+        products?.map((product, index) => {
+            return(
+            <tr key={index}>
+                <td>{product.name}</td>
+                <td>{product.code}</td>
+                <td>{product.type}</td>
+                <td>{product.quantity}</td>
+                <td>{product.price}</td>
+                
+                <td><span id={product.code} onClick={updateRow}  style={ProductsStyle.update} >update</span> &nbsp; <span id={product.code} onClick={deleteRow} style={ProductsStyle.delete}  >delete</span></td>
+            </tr>
+
+            )
+        })
+}
          </tbody>
        </table>
       </div>

@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+
 import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useProduct } from "../zustand";
 
-export function AddProduct() {
 
-  const AddProductStyle = {
+export function UpdateProduct() {
+const row  = useProduct(state=>state.row)
+const handleProduct = useProduct(state=>state.handleProduct)
+const products = useProduct(state => state.products)
+console.log("this is row na name",row);
+const UpdateProductStyle = {
     container : {
         width:"500px",
         height:"450px",
@@ -50,14 +55,9 @@ export function AddProduct() {
         marginTop:"20px",
         fontSize:"14px",
         marginTop:"40px"
-    }    
+    }
+    
 } 
-    // this is for updateing thi global state 
-    const handleProduct = useProduct(state => state.handleProduct)
-
-        // this is for reading pervious data of global state 
-        const products = useProduct(state => state.products)
-
 
     function addProduct(event) {
         event.preventDefault();
@@ -70,26 +70,26 @@ export function AddProduct() {
             type:event.target.type.value,            
         }
 
-        // the new object is  passed to the global state ...
-        handleProduct([newProduct,...products])
-        
+        const filteredData = products.filter(item => item.code != event.target.code.value)
+        console.log("this is the filteredData", filteredData)
+        handleProduct([...filteredData, newProduct])
+
         document.getElementById("name").value = ""
         document.getElementById("code").value = ""
         document.getElementById("price").value = ""
         document.getElementById("quantity").value = ""
     }
-    
     return(
   <div>
       <Header />
-      <div style={AddProductStyle.container}>
+      <div style={UpdateProductStyle.container}>
         <form action="#" onSubmit={addProduct}>
-            <div style={AddProductStyle.heading}>Add a new product with this form</div>
-            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Name" id="name"/>
-            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Code" id="code" />
-            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Price" id="price"/>
-            <input type="number" style={AddProductStyle.inputs}  placeholder="Product Quantity" id="quantity" />
-            <select style={AddProductStyle.selectButton} id="type">
+            <div style={UpdateProductStyle.heading}>Update product with this form</div>
+            <input type="text" defaultValue={row.name} style={UpdateProductStyle.inputs}  placeholder="Product Name" id="name"/>
+            <input type="text" defaultValue={row.code}style={UpdateProductStyle.inputs}  placeholder="Product Code" id="code" />
+            <input type="text" defaultValue={row.price}style={UpdateProductStyle.inputs}  placeholder="Product Price" id="price"/>
+            <input type="number" defaultValue={row.quantity} style={UpdateProductStyle.inputs}  placeholder="Product Quantity" id="quantity" />
+            <select defaultValue={row.type} style={UpdateProductStyle.selectButton} id="type">
                 <option value="aaa" selected="selected">Select Category</option>
                 <option value="bbb">Audi</option>
                 <option value="bbb">BMW</option>
@@ -105,7 +105,7 @@ export function AddProduct() {
                 <option value="mmm">Volvo</option>
             </select>
 
-            <input type="submit" value="Add Product" style={AddProductStyle.submitButton} />
+            <input type="submit" value="Save changes" style={UpdateProductStyle.submitButton} />
         </form>
       </div>
       <Footer/>

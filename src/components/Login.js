@@ -50,7 +50,7 @@ export function Login() {
     forgotLink :{
     float:"left",
     paddingLeft:'50px',
-    paddingBottom:'10px',
+    paddingBottom:'20px',
     fontSize:'13px',
     textDecoration:"none",
     color:"gray",
@@ -59,7 +59,7 @@ export function Login() {
     loginButton :{
       width: "300px",
       height:"30px",
-      marginBottom:"15px",
+      marginBottom:"10px",
     },
     } 
 
@@ -72,6 +72,7 @@ export function Login() {
     <input style = {LoginStyle.inputs} type = "password" name="password" placeholder="Enter your password" id = "password" />
     <a href = "/forgot" style={LoginStyle.forgotLink}>Forgot password</a>
     <input type = "submit"  style = {LoginStyle.loginButton}  value = "Login"/>
+    
     </form>
   </div>
   )
