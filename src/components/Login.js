@@ -1,10 +1,13 @@
 import React,{useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useProduct } from "../zustand";
 
 export function Login() {
+
+  const handleUserLogin = useProduct(state => state.handleUserLogin)
+  let isLogin = useProduct(state => state.isLogin)
  const navigate = useNavigate();
   const [loginValue]  = useState({email:"reza@gmail.com",password:"123"});
-
   function handleLogin(event) {
     event.preventDefault()
 
@@ -12,6 +15,8 @@ export function Login() {
     let password = event.target.password.value
     
     if(email === loginValue.email && password === loginValue.password) {
+      isLogin = true
+      handleUserLogin(isLogin)
       navigate("/Home")
     }
     else {

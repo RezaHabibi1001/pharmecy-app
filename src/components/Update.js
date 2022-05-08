@@ -4,13 +4,23 @@ import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useProduct } from "../zustand";
-
-
+import { useEffect} from "react";
+import { useNavigate } from "react-router-dom";
 export function UpdateProduct() {
+
+    const isLogin = useProduct(state => state.isLogin)
+    const navigate = useNavigate()
+    useEffect(() => {
+      // Runs once, after mounting
+      if(isLogin === false) {
+        navigate("/")
+      }
+    
+    }, []);
+   
 const row  = useProduct(state=>state.row)
 const handleProduct = useProduct(state=>state.handleProduct)
 const products = useProduct(state => state.products)
-console.log("this is row na name",row);
 const UpdateProductStyle = {
     container : {
         width:"500px",

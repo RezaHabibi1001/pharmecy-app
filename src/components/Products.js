@@ -1,17 +1,25 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../zustand";
 
+// this is the Component to recieve the the profucts. 
 export function Products() {
-
+  const  isLogin = useProduct(state => state.isLogin)
   const navigate = useNavigate()
   const products = useProduct(state => state.products)
   const handleproducts = useProduct(state => state.handleProduct)
   const handleSelectedRow = useProduct(state=>state.handleSelectedRow)  
-  
+
+   useEffect(()=>{
+     if(isLogin == false) {
+       navigate("/")
+     }
+   },[] )
+
+
   function updateRow(event) {
     const filteredProducts = products.filter((item) => item.code == event.target.id);
     const filteredObject = filteredProducts[0]
@@ -21,6 +29,12 @@ export function Products() {
   function deleteRow(event) {
     const filteredProducts = products.filter((item) => item.code !== event.target.id);
     handleproducts([...filteredProducts])
+  }
+
+  function searchProduct(event) {
+    event.preventDefault()
+    let foundProduct = products.map(product => product.name == event.target.value)
+    handleproducts([...foundProduct])
   }
 
   const ProductsStyle = {
@@ -67,7 +81,7 @@ export function Products() {
            <tr>
              <th style={ProductsStyle.searchLabel}>Search Products</th>
              <th colSpan="5">
-               <input type="search" placeholder="  Seach products" name="search" style={ProductsStyle.searchField}/>
+               <input type="search" onChange={searchProduct} placeholder="  Seach products" name="search" style={ProductsStyle.searchField}/>
              </th>
            </tr>
         <tr>

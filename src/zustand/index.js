@@ -1,8 +1,8 @@
 import create from 'zustand'
-
 export const useProduct = create(set => ({
-users:[],
-handleUsers: (newUser) => set({users:[...newUser]}),
+isLogin:false,
+
+handleUserLogin: (user) => set({isLogin:user}),
 
   products:[
     {
@@ -42,3 +42,7 @@ handleUsers: (newUser) => set({users:[...newUser]}),
     }
   ],
 }))
+
+
+
+

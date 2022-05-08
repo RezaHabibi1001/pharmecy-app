@@ -7,7 +7,7 @@ import { Products } from './components/Products.js'
 import { Orders } from './components/Orders.js'
 import { UpdateProduct } from './components/Update.js'
 import { useProduct } from './zustand/index.js'
-
+import { ExchangeRates } from './components/ExchangeRates.js'
 
 export const App = () => {
 
@@ -59,6 +59,14 @@ export const App = () => {
           element={
             <Fragment>
               <UpdateProduct />
+            </Fragment>
+          }
+        />
+        <Route
+          path="/ExchangeRates"
+          element={
+            <Fragment>
+              <ExchangeRates />
             </Fragment>
           }
         />

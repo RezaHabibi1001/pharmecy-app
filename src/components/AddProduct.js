@@ -3,9 +3,18 @@ import "./../styles/general.css"
 import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useProduct } from "../zustand";
-
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 export function AddProduct() {
-
+    const isLogin = useProduct(state => state.isLogin)
+    const navigate = useNavigate()
+    useEffect(() => {
+        // Runs once, after mounting
+        if(isLogin === false) {
+          navigate("/")
+        }
+      
+      }, []);
   const AddProductStyle = {
     container : {
         width:"500px",

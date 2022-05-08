@@ -1,18 +1,20 @@
 import { rgbToHex } from "@material-ui/core";
 import React from "react";
 import { Link } from "react-router-dom";
+import { useProduct } from "../zustand";
 
 import "./../styles/general.css"
 
 export function Header() {
 
+  let handleUserLogin = useProduct(state=>state.handleUserLogin)
+  let isLogin = useProduct(state => state.isLogin)
     function hoverStyle(e){
         e.target.style.backgroundColor = '#333';
     }
     function normalStyle(e){
         e.target.style.backgroundColor = '#555';
     }
-    
   const HeaderStyle = {
     container:{
     width:"100%",
