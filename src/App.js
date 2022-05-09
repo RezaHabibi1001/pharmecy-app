@@ -7,8 +7,11 @@ import { Products } from './components/Products.js'
 import { Orders } from './components/Orders.js'
 import { UpdateProduct } from './components/Update.js'
 import { useProduct } from './zustand/index.js'
-import { ExchangeRates } from './components/ExchangeRates.js'
 
+import { TestingProducts } from './components/TestingProducts.js'
+import { TestingProduct } from './components/TestingProduct.js'
+import { TestingProductCreate } from './components/TestingProductCreate.js'
+import { TestingProductDelete } from './components/TestingProductDelete.js'
 export const App = () => {
 
   return (
@@ -63,10 +66,34 @@ export const App = () => {
           }
         />
         <Route
-          path="/ExchangeRates"
+          path="/TestingProducts"
           element={
             <Fragment>
-              <ExchangeRates />
+              <TestingProducts />
+            </Fragment>
+          }
+        />
+        <Route
+          path="/TestingProduct"
+          element={
+            <Fragment>
+              <TestingProduct />
+            </Fragment>
+          }
+        />
+        <Route
+          path="/TestingProductCreate"
+          element={
+            <Fragment>
+              <TestingProductCreate />
+            </Fragment>
+          }
+        />
+         <Route
+          path="/TestingProductDelete"
+          element={
+            <Fragment>
+              <TestingProductDelete />
             </Fragment>
           }
         />

@@ -1,12 +1,44 @@
 import {gql} from "@apollo/client";
 
-export const PRODUCTS = gql`
-  query GetProducts {
-    products(where:{}, numberOfItems:5) {
 
+// This query is for retriving all  ----------------------------------------------------------(1)
+export const PRODUCTS = gql`
+  query Products($where:ProductsWhereInput, $numberOfItems:Int!){
+    products(where:$where, numberOfItems:$numberOfItems) {
       products {
         id
+        name_en
+        name_tr
       }
     }
+  }
+  `
+
+//This query is for retriving One Product ------------------------------------------------------(2)
+export const PRODUCT = gql`
+  query Product($where:OneproductInput) {
+    product(where:$where) {
+      id 
+      name_en
+      name_tr
+    }
+  }
+`
+
+// This mutation is for Insertin product into database ----------------------------------------------(3)
+export const PRODUCT_CREATE = gql`
+  mutation ProductCreate($data:ProductInput!) {
+    productCreate(data:$data){
+      id
+      name_en
+      name_tr
+    }
+  }
+`
+
+// This mutation is for Deleting product from database ----------------------------------------------(4)
+export const PRODUCT_DELETE = gql`
+  mutation ProductDelete($id:ID) {
+    productDelete(id:$id)
   }
 `
