@@ -32,24 +32,7 @@ export function Home() {
   <div>
       <Header />
       <div style={HomeStyle}>
-        <h1 style={HomeStyle.header}>Welcome to the .... Management applicaiton...!</h1>
-
-        <p style={HomeStyle.paragraph}>
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.<br />
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        This application is for management of financial accounts.This application is for management of financial accounts.
-        </p>
+      Hello
       </div>
       <Footer/>
 </div>

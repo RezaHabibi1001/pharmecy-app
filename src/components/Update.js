@@ -6,7 +6,15 @@ import { Footer } from "./Footer";
 import { useProduct } from "../zustand";
 import { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
+import { PRODUCT_UPDATE } from "../GraphQL/queries";
+import { useApolloClient } from "@apollo/client";
 export function UpdateProduct() {
+    const client = useApolloClient()
+
+    const row  = useProduct(state=>state.row)
+        const handleSelectedRow = useProduct(state=>state.handleSelectedRow)
+        const handleProduct = useProduct(state=>state.handleProduct)
+        const products = useProduct(state => state.products)
 
     const isLogin = useProduct(state => state.isLogin)
     const navigate = useNavigate()
@@ -18,9 +26,7 @@ export function UpdateProduct() {
     
     }, []);
    
-const row  = useProduct(state=>state.row)
-const handleProduct = useProduct(state=>state.handleProduct)
-const products = useProduct(state => state.products)
+
 const UpdateProductStyle = {
     container : {
         width:"500px",
@@ -69,35 +75,45 @@ const UpdateProductStyle = {
     
 } 
 
-    function addProduct(event) {
+    async function UpdateProduct(event) {
         event.preventDefault();
             
         let newProduct = {
-            name:event.target.name.value,
-            code:event.target.code.value,
-            price:event.target.price.value,
-            quantity:event.target.quantity.value,
-            type:event.target.type.value,            
+            name_tr:event.target.name_tr.value,
+            name_en:event.target.name_en.value,
         }
+        let oldObjectId = {
+            id:event.target.id.value,
+        }
+        console.log("this is data passed to query variables", newProduct)
+        console.log("This is the where passed to query variables", oldObjectId)
 
-        const filteredData = products.filter(item => item.code != event.target.code.value)
+        const res = await client.mutate({
+            mutation:PRODUCT_UPDATE,
+            variables:{
+                where:oldObjectId,
+                data:newProduct
+            }
+          })
+        
+        const filteredData = products.filter(item => item.id != event.target.id.value)
         console.log("this is the filteredData", filteredData)
-        handleProduct([...filteredData, newProduct])
+        handleProduct([...filteredData])
 
-        document.getElementById("name").value = ""
-        document.getElementById("code").value = ""
-        document.getElementById("price").value = ""
+        document.getElementById("id").value = ""
+        document.getElementById("name_tr").value = ""
+        document.getElementById("name_en").value = ""
         document.getElementById("quantity").value = ""
     }
     return(
   <div>
       <Header />
       <div style={UpdateProductStyle.container}>
-        <form action="#" onSubmit={addProduct}>
+        <form action="#" onSubmit={UpdateProduct}>
             <div style={UpdateProductStyle.heading}>Update product with this form</div>
-            <input type="text" defaultValue={row.name} style={UpdateProductStyle.inputs}  placeholder="Product Name" id="name"/>
-            <input type="text" defaultValue={row.code}style={UpdateProductStyle.inputs}  placeholder="Product Code" id="code" />
-            <input type="text" defaultValue={row.price}style={UpdateProductStyle.inputs}  placeholder="Product Price" id="price"/>
+            <input type="text" defaultValue={row.id} style={UpdateProductStyle.inputs}  placeholder="Product Name" id="id"/>
+            <input type="text" defaultValue={row.name_tr}style={UpdateProductStyle.inputs}  placeholder="Product Code" id="name_tr" />
+            <input type="text" defaultValue={row.name_en}style={UpdateProductStyle.inputs}  placeholder="Product Price" id="name_en"/>
             <input type="number" defaultValue={row.quantity} style={UpdateProductStyle.inputs}  placeholder="Product Quantity" id="quantity" />
             <select defaultValue={row.type} style={UpdateProductStyle.selectButton} id="type">
                 <option value="aaa" selected="selected">Select Category</option>

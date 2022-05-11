@@ -4,15 +4,7 @@ isLogin:false,
 
 handleUserLogin: (user) => set({isLogin:user}),
 
-  products:[
-    {
-      name:"Reza Habibi",
-      code:"3278482",
-      price:34,
-      quantity:333,
-      type:"1401-02-03"
-    }
-  ],
+  products:[],
   handleProduct: (newProduct) => set({ products:[...newProduct]}),
   
   row:{},

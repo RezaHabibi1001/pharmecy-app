@@ -42,3 +42,14 @@ export const PRODUCT_DELETE = gql`
     productDelete(id:$id)
   }
 `
+
+// This mutation  id for Updating Product in the database
+export const PRODUCT_UPDATE = gql`
+  mutation ProductUpdate($where: ProductUpdateWhereInput!, $data: ProductInput) {
+    productUpdate(where:$where,data:$data){
+        id
+        name_en
+        name_tr
+    }
+  }
+`

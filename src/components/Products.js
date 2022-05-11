@@ -4,37 +4,65 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { useNavigate } from "react-router-dom";
 import { useProduct } from "../zustand";
-
+import {useQuery} from "@apollo/client";
+import {PRODUCTS} from "../GraphQL/queries"
+import { useApolloClient } from "@apollo/client";
+import { PRODUCT_DELETE } from "../GraphQL/queries";
 // this is the Component to recieve the the profucts. 
 export function Products() {
   const  isLogin = useProduct(state => state.isLogin)
   const navigate = useNavigate()
   const products = useProduct(state => state.products)
-  const handleproducts = useProduct(state => state.handleProduct)
+  const handleproduct = useProduct(state => state.handleProduct)
   const handleSelectedRow = useProduct(state=>state.handleSelectedRow)  
+  const client = useApolloClient()
 
-   useEffect(()=>{
+  useEffect(()=>{
      if(isLogin == false) {
        navigate("/")
      }
+     query()
    },[] )
+
+   const query = async () => {
+     const res = await client.query({
+      query: PRODUCTS,
+      variables:{
+        numberOfItems: 5
+      }
+    })
+     handleproduct([...res.data.products.products])
+   }
+
 
 
   function updateRow(event) {
-    const filteredProducts = products.filter((item) => item.code == event.target.id);
+    const filteredProducts = products.filter((item) => item.id == event.target.id);
     const filteredObject = filteredProducts[0]
     handleSelectedRow(filteredObject)
     navigate("/Update")
   }
-  function deleteRow(event) {
-    const filteredProducts = products.filter((item) => item.code !== event.target.id);
-    handleproducts([...filteredProducts])
+
+  async function deleteRow ( event) {
+      const res = await client.mutate({
+       mutation:PRODUCT_DELETE,
+       variables:{
+         id:event.target.id
+       }
+    })
+    const filteredProducts = products.filter((item) => item.id !== event.target.id);
+
+    handleproduct([...filteredProducts])
+    
+    console.log("global state after delete",filteredProducts)
+
   }
 
+  console.log("this is global state",products)
   function searchProduct(event) {
     event.preventDefault()
     let foundProduct = products.map(product => product.name == event.target.value)
-    handleproducts([...foundProduct])
+    handleproduct([...foundProduct])
   }
 
   const ProductsStyle = {
@@ -96,16 +124,16 @@ export function Products() {
          <tbody>
          
     {
-        products?.map((product, index) => {
+        products?.map((product) => {
             return(
-            <tr key={index}>
-                <td>{product.name}</td>
-                <td>{product.code}</td>
-                <td>{product.type}</td>
-                <td>{product.quantity}</td>
-                <td>{product.price}</td>
+            <tr key={product.id}>
+                <td>{product.id}</td>
+                <td>{product.name_en}</td>
+                <td>{product.name_en}</td>
+                <td>{product.name_tr}</td>
+                <td>{product.name_tr}</td>
                 
-                <td><span id={product.code} onClick={updateRow}  style={ProductsStyle.update} >update</span> &nbsp; <span id={product.code} onClick={deleteRow} style={ProductsStyle.delete}  >delete</span></td>
+                <td><span id={product.id} onClick={updateRow}  style={ProductsStyle.update} >update</span> &nbsp; <span id={product.id} onClick={deleteRow} style={ProductsStyle.delete}  >delete</span></td>
             </tr>
 
             )

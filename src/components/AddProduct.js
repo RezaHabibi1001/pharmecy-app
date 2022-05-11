@@ -5,7 +5,16 @@ import { Footer } from "./Footer";
 import { useProduct } from "../zustand";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { PRODUCT_CREATE } from "../GraphQL/queries";
+import { useApolloClient } from "@apollo/client";
 export function AddProduct() {
+    const client = useApolloClient()
+
+ // this is for updateing thi global state 
+ const handleProduct = useProduct(state => state.handleProduct)
+
+ // this is for reading pervious data of global state 
+ const products = useProduct(state => state.products)
     const isLogin = useProduct(state => state.isLogin)
     const navigate = useNavigate()
     useEffect(() => {
@@ -61,41 +70,43 @@ export function AddProduct() {
         marginTop:"40px"
     }    
 } 
-    // this is for updateing thi global state 
-    const handleProduct = useProduct(state => state.handleProduct)
-
-        // this is for reading pervious data of global state 
-        const products = useProduct(state => state.products)
+   
 
 
-    function addProduct(event) {
+    async function addProduct(event) {
         event.preventDefault();
-            
+
         let newProduct = {
-            name:event.target.name.value,
-            code:event.target.code.value,
-            price:event.target.price.value,
-            quantity:event.target.quantity.value,
-            type:event.target.type.value,            
+            name_en:event.target.name_en.value,
+            name_tr:event.target.name_tr.value,
         }
+
+        
+            const res = await client.mutate({
+             mutation:PRODUCT_CREATE,
+             variables:{
+                data:newProduct
+             }
+           })
+          
 
         // the new object is  passed to the global state ...
         handleProduct([newProduct,...products])
-        
-        document.getElementById("name").value = ""
-        document.getElementById("code").value = ""
+        document.getElementById("name_en").value = ""
+        document.getElementById("name_tr").value = ""
         document.getElementById("price").value = ""
         document.getElementById("quantity").value = ""
     }
-    
+    console.log("this is global state",products);
+
     return(
   <div>
       <Header />
       <div style={AddProductStyle.container}>
         <form action="#" onSubmit={addProduct}>
             <div style={AddProductStyle.heading}>Add a new product with this form</div>
-            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Name" id="name"/>
-            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Code" id="code" />
+            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Name" id="name_en"/>
+            <input type="text" style={AddProductStyle.inputs}  placeholder="Product Code" id="name_tr" />
             <input type="text" style={AddProductStyle.inputs}  placeholder="Product Price" id="price"/>
             <input type="number" style={AddProductStyle.inputs}  placeholder="Product Quantity" id="quantity" />
             <select style={AddProductStyle.selectButton} id="type">
