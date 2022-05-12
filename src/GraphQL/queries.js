@@ -53,3 +53,20 @@ export const PRODUCT_UPDATE = gql`
     }
   }
 `
+export const GET_WEATHER = gql `
+
+query getCityByName($name:String!){
+  getCityByName(name:$name) {
+    name
+    weather {
+      summary{
+        title
+        description
+        icon 
+      }
+    }
+
+  }   
+  }
+
+`
